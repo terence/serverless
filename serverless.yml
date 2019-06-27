@@ -11,7 +11,8 @@
 #
 # Happy Coding!
 
-service: aws-nodejs # NOTE: update this with your service name
+service: aws-nodejs
+# NOTE: update this with your service name
 #app: your-app-name
 #tenant: your-tenant-name
 
@@ -23,6 +24,7 @@ provider:
   name: aws
   runtime: nodejs10.x
   region: ap-southeast-2
+  stage: dev
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
@@ -101,12 +103,18 @@ functions:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
+resources:
+  Resources:
+    crawlerTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: crawler2
+        AttributeDefinitions:
+          - AttributeName: url
+            AttributeType: S
+        KeySchema:
+          - AttributeName: url
+            KeyType: HASH
 #  Outputs:
 #     NewOutput:
 #       Description: "Description for the output"
